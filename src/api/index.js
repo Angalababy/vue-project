@@ -3,3 +3,5 @@ import ajax from './ajax'
 export const getCategory=()=> ajax('/mock/category')
 export const getHome=()=>ajax('/mock/home')
 export const getSearch=()=>ajax('/api/xhr/search/init.json')
+export const getGeneralTabs=()=>ajax('/api/topic/v1/find/getTabs.json')
+export const getRecManual=()=>ajax('/api/topic/v1/find/recManual.json')

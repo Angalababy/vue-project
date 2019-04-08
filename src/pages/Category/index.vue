@@ -54,16 +54,20 @@
       if(result.code===0){
         this.categoryL1List=result.data.categoryL1List
       }
-//      new BScorll('.m-cateNavVertWrap',{
-//        scrollY:true,
-//        click:true
-//      })
-//      new BScorll('.m-subCateList',{
-//        scrollY:true,
-//        click:true
-//      })
-    },
+      new BScorll('.m-content',{
+        click:true
+      })
 
+    },
+    watch:{
+      categoryL1List(){
+        this.$nextTick(()=>{
+          new BScorll('.m-subCateList',{
+            click:true
+          })
+        })
+      }
+    }
   }
 </script>
 
@@ -80,6 +84,8 @@
     background-color #ffffff
     display flex
     align-items center
+    z-index 10
+    position relative
     .serach
       height 56px
       width 100%
@@ -96,20 +102,17 @@
         font-size 27px
   .m-cateContainer
     width 100%
-    height 100%
     display flex
     .m-cateNavVertWrap
       width 162px
-      height 100%
+      height 1146px
       background-color #ffffff
       .m-content
         width 100%
         height 100%
         .list
           width 100%
-          height 100%
           padding 40px 0px
-          box-sizing border-box
           .item
             width 100%
             height 50px
@@ -127,14 +130,13 @@
               overflow hidden
 
     .m-subCateList
-      width 528px
-      height 872px
+      width 588px
+      height 1146px
       padding 30px 30px 21px 30px
       box-sizing border-box
       .m-subCateinner
-        width 528px
-        height 872px
-        overflow hidden
+        width 100%
+        padding-top 30px
         .banner
           width 100%
           height 192px
@@ -143,7 +145,6 @@
 
         .cateList
           width 100%
-          height 648px
           .list
             width 100%
             overflow hidden

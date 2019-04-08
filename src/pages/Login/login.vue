@@ -10,7 +10,7 @@
           <a class="search" @click="$router.push('/search')">
             <i class="iconfont icon-search-1-copy"></i>
           </a>
-          <a class="cart">
+          <a class="cart" @click="$router.push('/shopping')">
             <i class="iconfont icon-icon--"></i>
           </a>
         </div>

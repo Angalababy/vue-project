@@ -9,7 +9,7 @@
         <i class="iconfont icon-search-1-copy"></i>
         <span>搜索商品，共221100款好物</span>
       </div>
-      <button class="login">登录</button>
+      <button class="login" @click="$router.push('/login')">登录</button>
     </div>
     <!--导航-->
     <div class="tabWarp" v-if="!isShowMask">
@@ -1062,7 +1062,6 @@
             line-height 40px
             color #b4282d
             border 1px solid #b4282d
-            border-radius 10px
             margin-left 20px
             background-color #fff
        .tabWarp

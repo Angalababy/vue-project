@@ -5,6 +5,7 @@ import 'lib-flexible/flexible'
 import App from './App.vue'
 
 import './mock/mockServer'
+import store from './store'
 
 new Vue({
   el:'#app',
@@ -12,5 +13,6 @@ new Vue({
   components:{
     App
   },
-  template:'<App/>'
+  template:'<App/>',
+  store
 })

@@ -7,13 +7,13 @@
     </a>
     <div class="m-head">
       <a class="head">发现</a>
-      <a>甄选家</a>
+      <a href="http://m.you.163.com/expert/index">甄选家</a>
     </div>
     <div class="right">
       <a class="search" @click="$router.push('/search')">
         <i class="iconfont icon-search-1-copy"></i>
       </a>
-      <a class="cart">
+      <a class="cart" @click="$router.push('/shopping')">
         <i class="iconfont icon-icon--"></i>
       </a>
     </div>
@@ -21,103 +21,82 @@
   <!--导航-->
   <div class="m-main-tab">
     <ul class="m-main-list">
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
-      </li>
-      <li>
-        <a>推荐</a>
+      <li v-for="(item,index) in generalTabs" :key="index">
+        <a>{{item.tabName}}</a>
       </li>
     </ul>
   </div>
   <!--内容-->
   <div class="content-wrap">
     <div class="m-main-content">
-      <div class="item">
-      <a class="itemList">
-        <div class="u-name">
-            <span class="ava">
-              <img src="./images/d9d036fac85df6b30cf8c184e030323c.png" alt="">
-            </span>
-          <span class="name">选妹</span>
-        </div>
-        <div class="title">这些爆品火到断货，好不容易补到一批上架了！</div>
-        <div class="u-pic">
-          <img src="./images/fa8eac98570fb6baeeb5823ee097a366.jpg" alt="">
-        </div>
-        <div class="u-rcount">
-          <i class="iconfont icon-yanjing"></i>
-          <span>11.6k人看过</span>
-        </div>
-      </a>
-    </div>
-      <div class="item">
-        <a class="itemList">
-          <div class="u-name">
-            <span class="ava">
-              <img src="./images/d9d036fac85df6b30cf8c184e030323c.png" alt="">
-            </span>
-            <span class="name">选妹</span>
-          </div>
-          <div class="title">这些爆品火到断货，好不容易补到一批上架了！</div>
-          <div class="u-pic">
-            <img src="./images/fa8eac98570fb6baeeb5823ee097a366.jpg" alt="">
-          </div>
-          <div class="u-rcount">
-            <i class="iconfont icon-yanjing"></i>
-            <span>11.6k人看过</span>
-          </div>
-        </a>
-      </div>
-      <div class="item-1">
-        <a class="itemList">
-          <div class="left">
+      <div  v-for="(item,index) in recManual" :key="index">
+        <div class="item" v-for="(topics,index) in item.topics" :key="index" v-if="topics.style===1">
+          <a class="itemList">
             <div class="u-name">
             <span class="ava">
-              <img src="./images/c963b95252d629ad0634a92b4d92457e.jpg" alt="">
+              <img :src="topics.avatar" alt="">
             </span>
-            <span class="name">选妹</span>
+              <span class="name">{{topics.nickname}}</span>
             </div>
-            <div class="title">跟着网易员工薅羊毛，又准又狠</div>
-            <div class="desc">15款爆品限时特价，低至6.5折</div>
+            <div class="title">{{topics.title}}</div>
+            <div class="u-pic">
+              <img :src="topics.picUrl" alt="">
+            </div>
             <div class="u-rcount">
               <i class="iconfont icon-yanjing"></i>
-              <span>11.6k人看过</span>
+              <span>{{topics.readCount}}k人看过</span>
             </div>
-          </div>
-          <div class="right">
-              <img src="./images/fa8eac98570fb6baeeb5823ee097a366.jpg" alt="">
-          </div>
-        </a>
+          </a>
+        </div>
+        <div class="item-1" v-for="(topics,index) in item.topics" :key="index" v-if="topics.style===2">
+          <a class="itemList">
+            <div class="left">
+              <div class="u-name">
+            <span class="ava">
+              <img :src="topics.avatar" alt="">
+            </span>
+                <span class="name">{{topics.nickname}}</span>
+              </div>
+              <div class="title">{topics.title}}</div>
+              <div class="desc">{{topics.subTitle}}</div>
+              <div class="u-rcount">
+                <i class="iconfont icon-yanjing"></i>
+                <span>{{topics.readCount}}k人看过</span>
+              </div>
+            </div>
+            <div class="right">
+              <img :src="topics.picUrl" alt="">
+            </div>
+          </a>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
   export default {
     mounted(){
       new BScroll('.content-wrap',{
         click:true
+      })
+      new BScroll('.m-main-tab',{
+        click:true,
+        scrollX:true
+      })
+      this.$store.dispatch('getRecManual')
+
+      this.$store.dispatch('getGeneralTabs')
+    },
+    computed:{
+      ...mapState({
+        generalTabs:state=>state.general.generalTabs,
+        recManual:state=>state.general.recManual
+
       })
     }
   }
@@ -138,6 +117,8 @@
     display flex
     justify-content space-between
     align-items center
+    position relative
+    z-index 100
     a
       i
         font-size 48px
@@ -154,16 +135,14 @@
     .right
       .search
         margin-right 15px
-
-
-
   .m-main-tab
     width 100%
     height 72px
     padding-bottom 20px
     display flex
+    position relative
+    z-index 100
     .m-main-list
-      width 100%
       display flex
       background-color #fafafa
       li
